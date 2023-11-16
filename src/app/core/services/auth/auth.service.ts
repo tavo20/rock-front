@@ -11,14 +11,13 @@ export class AuthService {
 
   constructor(
     private http: HttpClient
-  ) { 
+  ) {
     console.log('AuthService constructor', this.baseURL);
   }
 
-  
 
-  public login(email: string, password: string) {  
-    return this.http.post(`${this.baseURL}api/auth/login`, { email, password }, 
+  public login(user: string, password: string) {
+    return this.http.post(`${this.baseURL}api/auth/login`, { user, password },
     //{ observe: 'response',  }
     );
   }

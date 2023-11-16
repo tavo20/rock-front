@@ -1,24 +1,36 @@
-
-    <nb-layout  windowMode fixed>
-        <nb-layout-column class="continer-general-login">
-            
-                <figure>
-                    <img src="./assets/logos/logo.jpeg" alt="">
-                </figure>
-
-                <form [formGroup]="loginForm"  (ngSubmit)="onLogin($event)">
-                    <div>
-                        <input nbInput name="email" formControlName="email"  placeholder="Email" type="email">
-                    </div>
-            
-                    <div>
-                        <input nbInput  formControlName="password" placeholder="Contraseña" type="password">
-                    </div>
-            
-                    <button type="submit" > Iniciar sesión </button>
-            
-                </form>
-            </nb-layout-column>
-        </nb-layout>
-
-
+<nb-layout windowMode fixed>
+  <nb-layout-column class="continer-general-login">
+    <main class="body">
+      <div class="login">
+        <h2 class="title-login">Login</h2>
+        <form
+          [formGroup]="loginForm"
+          class="login-form"
+          (ngSubmit)="onLogin($event)"
+        >
+          <div class="textbox">
+            <input
+              style="color: gray"
+              nbInput
+              name="email"
+              formControlName="email"
+              placeholder="User"
+              type="email"
+            />
+          </div>
+          <div class="textbox">
+            <input
+              style="color: gray"
+              [type]="typeViewPassword"
+              nbInput
+              formControlName="password"
+              placeholder="Contraseña"
+              type="password"
+            />
+          </div>
+          <button type="submit">LOGIN</button>
+        </form>
+      </div>
+    </main>
+  </nb-layout-column>
+</nb-layout>

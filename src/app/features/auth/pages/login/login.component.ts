@@ -14,6 +14,9 @@ export class LoginComponent implements OnInit {
 
   loginForm = new FormGroup({});
 
+  public typeViewPassword = 'password';
+
+
   constructor(
     private formBuilder: FormBuilder,
     private alertsService: AlertsService,
@@ -41,17 +44,11 @@ export class LoginComponent implements OnInit {
 	}
 
   public onLogin(event: Event) {
-    console.log('onLogin')
     event.preventDefault();
 
     console.log('this.loginForm.value', this.loginForm.value);
 
     if (!this.loginForm.valid) {
-      // this.alertsService.info({ 
-      //   message: 'Por favor llena todos los campos', 
-      //   title: '', 
-      //   config: { duration: 3000  }
-      // });
       alert('Por favor llena todos los campos')
       return
     }
@@ -61,26 +58,34 @@ export class LoginComponent implements OnInit {
       next: (response: any) => {
         console.log('response', response);
 
-        if(response._id) {
+        if(response.success) {
           this.authService.saveTokenUser(response.token, response);
-          this.router.navigateByUrl('/users/view-users');
+          this.router.navigateByUrl('/sensors/home-sensors');
         } else {
-          alert(response);
+          alert('Ocurrio un error. Intenta mas tarde');
         }
 
-
-
       }, error: (error) => {
-        console.log('error', error);
+        console.error('error', error);
         if(error.status === 400) {
           this.alertsService.info({
-            message: error.error, 
-            title: '', 
-           config: { duration: 3000 } 
+            message: error.error,
+            title: '',
+           config: { duration: 3000 }
         });
         }
       }
     })
+  }
+
+
+  public onViewPassword() {
+    if(this.typeViewPassword === 'password') {
+      this.typeViewPassword = 'text';
+      return
+    }
+
+    this.typeViewPassword = 'password';
   }
 
 }
