@@ -1,0 +1,24 @@
+
+    <nb-layout  windowMode fixed>
+        <nb-layout-column class="continer-general-login">
+            
+                <figure>
+                    <img src="./assets/logos/logo.jpeg" alt="">
+                </figure>
+
+                <form [formGroup]="loginForm"  (ngSubmit)="onLogin($event)">
+                    <div>
+                        <input nbInput name="email" formControlName="email"  placeholder="Email" type="email">
+                    </div>
+            
+                    <div>
+                        <input nbInput  formControlName="password" placeholder="Contraseña" type="password">
+                    </div>
+            
+                    <button type="submit" > Iniciar sesión </button>
+            
+                </form>
+            </nb-layout-column>
+        </nb-layout>
+
+

@@ -1,0 +1,64 @@
+<nb-layout>
+    <nb-layout-column>
+        <h1>Estadisticas</h1>
+        <main>
+            <app-statistic-one
+                [name]="'Ventas hoy'"
+                [value]="globalSales.today"
+                [icon]="'options-outline'"
+                [color]="'success'"
+            > </app-statistic-one>
+            <app-statistic-one
+                [name]="'Ventas está semana'"
+                [value]="globalSales.week"
+                [icon]="'options-outline'"
+                [color]="'success'"
+            > </app-statistic-one>
+            <app-statistic-one
+                [name]="'Ventas este mes'"
+                [value]="globalSales.month"
+                [icon]="'options-outline'"
+                [color]="'success'"
+            > </app-statistic-one>
+
+        </main>
+
+        <nb-card>
+            <div class="container-charts">
+                <canvas id="myChartSales" width="400" height="400"></canvas>
+                <canvas id="myChartSales2" width="400" height="400"></canvas>
+            </div>
+        </nb-card>
+
+        <main>
+            <app-statistic-one
+                [name]="'Ventas hoy'"
+                [value]="globalSales.amountToday | currency : 'USD' : 'symbol' : '1.0-0'"
+                [icon]="'options-outline'"
+                [color]="'success'"
+                fontSize="1.5rem"
+                
+            > </app-statistic-one>
+            <app-statistic-one
+                [name]="'Ventas está semana'"
+                [value]="globalSales.amountWeek | currency : 'USD' : 'symbol' : '1.0-0'"
+                [icon]="'options-outline'"
+                [color]="'success'"
+                fontSize="1.5rem"
+                
+
+
+            > </app-statistic-one>
+            <app-statistic-one
+                [name]="'Ventas este mes'"
+                [value]="globalSales.amountMonth | currency : 'USD' : 'symbol' : '1.0-0'"
+                [icon]="'options-outline'"
+                [color]="'success'"
+                fontSize="1.5rem"
+                
+
+            > </app-statistic-one>
+
+        </main>
+    </nb-layout-column>
+</nb-layout>

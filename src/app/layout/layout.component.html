@@ -1,0 +1,13 @@
+<nb-layout windowMode fixed class="no-padding">
+  <!-- <nb-layout-header subheader>
+  </nb-layout-header> -->
+  <!-- MENU   -->
+  <nb-sidebar>
+    <nb-menu [items]="itemsMenu"></nb-menu>
+  </nb-sidebar>
+
+  <!-- INFORMATION -->
+  <nb-layout-column class="no-padding">
+    <router-outlet></router-outlet>
+  </nb-layout-column>
+</nb-layout>

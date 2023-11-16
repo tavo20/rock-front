@@ -1,0 +1,25 @@
+@use 'themes' as *;
+
+@use '@nebular/theme/styles/globals' as *;
+
+@include nb-install() {
+  @include nb-theme-global();
+};
+/* You can add global styles to this file, and also import other style files */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+
+body {
+  // font-family: 'Montserrat', sans-serif;
+}
+
+.card-custom {
+  padding: 15px;
+}
+
+
+::ng-deep  nb-theme-default ng2-smart-table .ng2-smart-actions a.ng2-smart-action {
+  font-size: 1rem !important;
+  color: #f83e00;
+}

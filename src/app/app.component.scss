@@ -1,0 +1,44 @@
+:root {
+    --pinkModa: #f8e8ea;
+    --blue: #1e90ff;
+    --white: #ffffff;
+}
+.card-custom {
+    padding: 10px;
+}
+
+a.ng2-smart-action {
+    font-size: 1rem !important;
+    color: #f83e00 !important;
+}
+
+.card-modal {
+	min-width: 35vw;
+	padding: 15px;
+    form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        input {
+            margin-bottom: 15px;
+        }
+        .nb-select {
+            margin-bottom: 15px;
+        }
+        textarea {
+            margin-bottom: 15px;
+
+        }
+        .container-btn-crear {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            margin: 50px 0 20px 0;
+            button {
+                width: 80%;
+            }
+        }
+    }
+
+}
