@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
+import { SensorI } from 'src/app/core/models/Sensor';
 import { SensorsService } from 'src/app/core/services/sensor/sensors.service';
 
 @Component({
@@ -9,6 +10,7 @@ import { SensorsService } from 'src/app/core/services/sensor/sensors.service';
   styleUrls: ['./view-sensor.component.scss']
 })
 export class ViewSensorComponent implements OnInit {
+  public sensor: SensorI = {} as SensorI;
 
   constructor(
     private sensorsService: SensorsService,
@@ -25,16 +27,35 @@ export class ViewSensorComponent implements OnInit {
       if (!params.id) {
         return;
       }
-      // this.getSensor(params.id);
+      this.getSensor({ sensorId: params.id});
+      this.getDataSensor({ sensorId: params.id});
+
     });
   }
 
-  public getSensor({ sensorId }: { sensorId: number }) {
+  public async getSensor({ sensorId }: { sensorId: number }) {
     try {
-      const respon = lastValueFrom(this.sensorsService.getSensor(sensorId));
+      const respon = await lastValueFrom(this.sensorsService.getSensor(sensorId));
       console.log(respon);
+      if(!respon) {
+        return;
+      }
+      this.sensor = respon;
 
 
+    } catch (error: any) {
+      console.error(error.message);
+    }
+  }
+
+  public async getDataSensor({ sensorId }: { sensorId: number }) {
+    try {
+      const respon = await lastValueFrom(this.sensorsService.getSensorData(sensorId));
+      console.log(respon);
+      if(!respon) {
+        return;
+      }
+      // this.sensor = respon;
     } catch (error: any) {
       console.error(error.message);
     }
