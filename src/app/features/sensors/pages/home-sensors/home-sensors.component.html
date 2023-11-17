@@ -1,9 +1,13 @@
 <h2>Bienvenidos</h2>
 
-<section class="container">
-  <nb-card *ngFor="let sensor of sensors">
-    <nb-card-body>
-      {{ sensor.sensor_name}}
-    </nb-card-body>
-  </nb-card>
+<div class="container-search">
+  <nb-icon icon="search-outline"></nb-icon>
+  <input type="text" placeholder="Search sensor" [formControl]="search" />
+</div>
+<section class="container" *ngIf="!loading">
+  <div *ngFor="let sensor of sensors">
+    <app-card-sensor [sensor]="sensor"></app-card-sensor>
+  </div>
 </section>
+
+<div *ngIf="loading">Loading...</div>

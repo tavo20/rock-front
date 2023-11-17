@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { lastValueFrom } from 'rxjs';
+import { debounceTime, distinctUntilChanged, lastValueFrom, switchMap, tap } from 'rxjs';
 import { SensorI } from 'src/app/core/models/Sensor';
 import { SensorsService } from 'src/app/core/services/sensor/sensors.service';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-home-sensors',
@@ -10,14 +11,18 @@ import { SensorsService } from 'src/app/core/services/sensor/sensors.service';
 })
 export class HomeSensorsComponent implements OnInit {
   public sensors: SensorI[] = [];
+  public sensorsStatic: SensorI[] = [];
+  public loading: boolean = true;
+  public search = new FormControl('');
+
   constructor(
     private sensorsService: SensorsService
   ) { }
 
   ngOnInit(): void {
-    this.getAllSensors()
+    this.getAllSensors();
+    this.changeSearch();
   }
-
 
   public async getAllSensors() {
     try {
@@ -26,12 +31,36 @@ export class HomeSensorsComponent implements OnInit {
         return [];
       }
       this.sensors = response;
+      this.sensorsStatic = response;
       return response;
 
     } catch (error: any) {
       console.log(error.message);
       return [];
+
+    } finally {
+      this.loading = false;
+
     }
+  }
+
+  public changeSearch() {
+    console.log('this.search', this.search);
+    this.search.valueChanges.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      tap((value) => {
+        console.log(value);
+      }),
+      switchMap((value) => {
+        return this.filterSensor(value)
+      }
+    )).subscribe();
+  }
+
+  public async filterSensor(value: string) {
+    this.sensors = this.sensorsStatic.filter(sensor => sensor.sensor_name.toLowerCase().includes(value.toLowerCase()));
+    console.log('this.sensors', this.sensors);
   }
 
 }
