@@ -6,7 +6,13 @@ import { ViewSensorComponent } from './pages/view-sensor/view-sensor.component';
 const routes: Routes = [
   {
     path: '',
+    // redirectTo: 'home-sensors',
     children: [
+      {
+        path: '',
+        component: HomeSensorsComponent,
+        redirectTo: 'home-sensors',
+      },
       {
         path: 'home-sensors',
         component: HomeSensorsComponent,
