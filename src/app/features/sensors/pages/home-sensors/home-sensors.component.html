@@ -1,1 +1,9 @@
-<p>home-sensors works!</p>
+<h2>Bienvenidos</h2>
+
+<section class="container">
+  <nb-card *ngFor="let sensor of sensors">
+    <nb-card-body>
+      {{ sensor.sensor_name}}
+    </nb-card-body>
+  </nb-card>
+</section>

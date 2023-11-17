@@ -1,5 +1,9 @@
-import { CurrencyPipe } from '@angular/common';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment'
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse, HttpStatusCode } from '@angular/common/http';
+import { catchError, last, lastValueFrom, map, Observable, of, ReplaySubject, Subject, tap } from 'rxjs';
+import { AlertsService } from 'src/app/core/services/alerts/alerts.service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -7,16 +11,35 @@ import { Injectable } from '@angular/core';
 export class SharedService {
 
   constructor(
-    private currencyPipe : CurrencyPipe
+    private httpClient: HttpClient,
+    private alertsService: AlertsService,
 
   ) { }
 
-  public transformAmountInput(value: string) {
-    let valueFilter =  value.replace(/[^0-9 ]/g, '');
-    return this.transformAmount(valueFilter);
+  public get<T>({ url, queryParams }: { url: string, queryParams?: any }): Observable<T> {
+    let params = new HttpParams();
+    if (queryParams) {
+      for (let key in queryParams) {
+        params = params.set(key, queryParams[key]);
+      }
+    }
+    return this.httpClient.get(url, { observe: 'response', params }).pipe(
+      map(this.handleResponseHttpClient.bind(this))
+    );
   }
 
-  public transformAmount(number : number | string) {
-    return this.currencyPipe.transform(number, 'USD', 'symbol-narrow', '1.0-2');
+  private handleResponseHttpClient(response: any) {
+    if (response.status === HttpStatusCode.Ok) {
+      return response.body;
+    } else {
+      this.handleError();
+      return null;
+    }
+  }
+
+  handleError() {
+
+    this.alertsService.error({ message: "Ocurrio un error", title: "Error" });
+
   }
 }
