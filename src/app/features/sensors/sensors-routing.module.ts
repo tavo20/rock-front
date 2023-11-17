@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeSensorsComponent } from './pages/home-sensors/home-sensors.component';
+import { ViewSensorComponent } from './pages/view-sensor/view-sensor.component';
 
 const routes: Routes = [
   {
@@ -9,6 +10,10 @@ const routes: Routes = [
       {
         path: 'home-sensors',
         component: HomeSensorsComponent,
+      },
+      {
+        path: 'view-sensor/:id',
+        component: ViewSensorComponent
       },
     ]
   },

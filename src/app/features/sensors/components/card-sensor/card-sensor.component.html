@@ -1,5 +1,11 @@
-<nb-card >
+<nb-card (click)="onSelectSensor()">
   <nb-card-body>
-    {{ sensor?.sensor_name }}
+    <div>
+      {{ sensor?.sensor_name }}
+    </div>
+    <div>
+      <nb-icon icon="flash-outline"></nb-icon>
+
+    </div>
   </nb-card-body>
 </nb-card>

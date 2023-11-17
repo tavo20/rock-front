@@ -3,6 +3,7 @@ import { debounceTime, distinctUntilChanged, lastValueFrom, switchMap, tap } fro
 import { SensorI } from 'src/app/core/models/Sensor';
 import { SensorsService } from 'src/app/core/services/sensor/sensors.service';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home-sensors',
@@ -16,7 +17,9 @@ export class HomeSensorsComponent implements OnInit {
   public search = new FormControl('');
 
   constructor(
-    private sensorsService: SensorsService
+    private sensorsService: SensorsService,
+    public router: Router,
+
   ) { }
 
   ngOnInit(): void {
@@ -44,14 +47,13 @@ export class HomeSensorsComponent implements OnInit {
     }
   }
 
+  /**
+   * Searching sensor by name
+   */
   public changeSearch() {
-    console.log('this.search', this.search);
     this.search.valueChanges.pipe(
       debounceTime(300),
       distinctUntilChanged(),
-      tap((value) => {
-        console.log(value);
-      }),
       switchMap((value) => {
         return this.filterSensor(value)
       }
@@ -60,7 +62,10 @@ export class HomeSensorsComponent implements OnInit {
 
   public async filterSensor(value: string) {
     this.sensors = this.sensorsStatic.filter(sensor => sensor.sensor_name.toLowerCase().includes(value.toLowerCase()));
-    console.log('this.sensors', this.sensors);
+  }
+
+  public onSelectedSensor(sensor: SensorI) {
+    this.router.navigate(['sensors/view-sensor', sensor._id]);
   }
 
 }

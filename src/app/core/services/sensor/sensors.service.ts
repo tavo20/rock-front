@@ -18,4 +18,9 @@ export class SensorsService {
     const url = `${environment.baseUrl}api/sensor/all`;
     return this.sharedService.get<SensorI[]>({ url: url });
   }
+
+  getSensor(sensorId: number): Observable<SensorI> {
+    const url = `${environment.baseUrl}api/sensor/${sensorId}`;
+    return this.sharedService.get<SensorI>({ url: url });
+  }
 }

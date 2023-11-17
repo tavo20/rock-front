@@ -1,3 +1,13 @@
 nb-card {
   margin: 0;
+  cursor: pointer;
+}
+nb-card:hover {
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  background: #f8f8f8;
+}
+
+nb-card-body {
+  display: flex;
+    justify-content: space-evenly;
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { SensorI } from 'src/app/core/models/Sensor';
 
 @Component({
@@ -7,17 +7,20 @@ import { SensorI } from 'src/app/core/models/Sensor';
   styleUrls: ['./card-sensor.component.scss']
 })
 export class CardSensorComponent implements OnInit {
-  @Input() sensor: any
+  @Input() sensor: SensorI = {} as SensorI;
+  @Output() selected  = new EventEmitter();
 
-  public test = 'test';
 
   constructor() { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('changes', changes);
   }
 
   ngOnInit(): void {
+  }
+
+  public onSelectSensor() {
+    this.selected.emit(this.sensor);
   }
 
 }
