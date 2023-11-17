@@ -6,6 +6,7 @@ import { NebularModule } from 'src/app/nebular/nebular.module';
 import { CardSensorComponent } from './components/card-sensor/card-sensor.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ViewSensorComponent } from './pages/view-sensor/view-sensor.component';
+import { ChartSensorComponent } from './components/chart-sensor/chart-sensor.component';
 
 
 
@@ -13,7 +14,8 @@ import { ViewSensorComponent } from './pages/view-sensor/view-sensor.component';
   declarations: [
     HomeSensorsComponent,
     CardSensorComponent,
-    ViewSensorComponent
+    ViewSensorComponent,
+    ChartSensorComponent
   ],
   imports: [
     CommonModule,

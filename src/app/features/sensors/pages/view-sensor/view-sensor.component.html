@@ -1,2 +1,64 @@
-
 <h1>{{ sensor.sensor_name }}</h1>
+
+<h3>{{ dataChartOne.label }}</h3>
+<section class="container-stad">
+  <nb-card>
+    <nb-card-header> Promedio</nb-card-header>
+    <div class="container-info">
+      <nb-icon icon="options-outline"> </nb-icon>
+      <div class="value">{{ dataChartOne.promedio | number : "1.2-2" }}</div>
+    </div>
+  </nb-card>
+
+  <nb-card>
+    <nb-card-header> Desviación estandar </nb-card-header>
+    <div class="container-info">
+      <nb-icon icon="options-outline"> </nb-icon>
+      <div class="value">{{ dataChartOne.desviacion | number : "1.2-2" }}</div>
+    </div>
+  </nb-card>
+</section>
+
+<app-chart-sensor [data]="dataChartOne.data" [labels]="dataChartOne.labels" [label]="dataChartOne.label" idDOM="one">
+  <nb-card>
+    <div class="container-charts">
+      <canvas id="one" width="900px" height="400"></canvas>
+    </div>
+  </nb-card>
+</app-chart-sensor>
+
+<div *ngIf="dataChartTwo.promedio">
+  <h3>{{ dataChartTwo.label }}</h3>
+  <section class="container-stad">
+    <nb-card>
+      <nb-card-header> Promedio</nb-card-header>
+      <div class="container-info">
+        <nb-icon icon="options-outline"> </nb-icon>
+        <div class="value">{{ dataChartTwo.promedio | number : "1.2-2" }}</div>
+      </div>
+    </nb-card>
+
+    <nb-card>
+      <nb-card-header> Desviación estandar </nb-card-header>
+      <div class="container-info">
+        <nb-icon icon="options-outline"> </nb-icon>
+        <div class="value">{{ dataChartTwo.desviacion | number : "1.2-2" }}</div>
+      </div>
+    </nb-card>
+  </section>
+  <app-chart-sensor
+    [data]="dataChartTwo.data"
+    [labels]="dataChartTwo.labels"
+    [label]="dataChartTwo.label"
+    idDOM="two"
+    borderColor="rgba(0, 0, 255, 1)"
+    backgroundColor="rgba(0, 0, 255, 0.2)"
+  >
+    <nb-card>
+      <div class="container-charts">
+        <canvas id="two" width="900px" height="400"></canvas>
+      </div>
+    </nb-card>
+  </app-chart-sensor>
+
+</div>
