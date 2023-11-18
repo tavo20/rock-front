@@ -28,6 +28,12 @@ export class SharedService {
     );
   }
 
+  public post<T>({ url, model }: { url: string; model: any }): Observable<T>  {
+    return this.httpClient.post(url, model, { observe: 'response' }).pipe(
+      map(this.handleResponseHttpClient.bind(this))
+    );
+  }
+
   private handleResponseHttpClient(response: any) {
     if (response.status === HttpStatusCode.Ok) {
       return response.body;
@@ -37,9 +43,9 @@ export class SharedService {
     }
   }
 
+
+
   handleError() {
-
     this.alertsService.error({ message: "Ocurrio un error", title: "Error" });
-
   }
 }

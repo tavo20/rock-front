@@ -26,7 +26,6 @@ export class ChartSensorComponent implements OnInit {
   ngOnInit(): void {
   }
   ngOnChanges(changes: any): void {
-    // console.log('changes', changes.data.currentValue);
 
     if(this.myChart) {
       this.myChart.data.labels = changes.labels.currentValue;;
@@ -42,14 +41,12 @@ export class ChartSensorComponent implements OnInit {
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.buildChart();
-      console.log('ngAfterViewInit', this.data);
-      console.log('ngAfterViewInit', this.labels);
+
     }, 1000)
   }
 
   public buildChart() {
     const canvas = document.getElementById(this.idDOM) as HTMLCanvasElement;
-    console.log('CANVASSS',canvas, this.idDOM);
     const ctx: any = canvas.getContext('2d');
      this.myChart = new Chart(ctx, {
       type: 'line',
@@ -77,31 +74,6 @@ export class ChartSensorComponent implements OnInit {
       },
     });
 
-    console.log({
-      type: 'line',
-      data: {
-        labels: ['one', 'two', 'three'],
-        datasets: [{
-          label: this.label,
-          data: [1,2,4],
-          backgroundColor: this.backgroundColor,
-          borderColor: this.borderColor,
-          borderWidth: this.borderWidth,
-          hoverBorderJoinStyle: 'round',
-        }],
-      },
-      options: {
-        responsive: false,
-        // cutoutPercentage: 70,
-        // borderWidth: 400,
-				animation: {
-					duration: 0 // general animation time
-				},
-        hover: {
-					mode: 'nearest' // duration of animations when hovering an item
-				},
-      },
-    })
   }
 
 }

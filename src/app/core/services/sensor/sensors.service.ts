@@ -20,13 +20,18 @@ export class SensorsService {
     return this.sharedService.get<SensorI[]>({ url: url });
   }
 
-  getSensor(sensorId: number): Observable<SensorI> {
+  getSensor(sensorId: string): Observable<SensorI> {
     const url = `${environment.baseUrl}api/sensor/get/${sensorId}`;
     return this.sharedService.get<SensorI>({ url: url });
   }
 
-  getSensorData(sensorId: number): Observable<RecordSensorI[]> {
+  getSensorData(sensorId: string): Observable<RecordSensorI[]> {
     const url = `${environment.baseUrl}api/record/sensor/data/${sensorId}`;
     return this.sharedService.get<RecordSensorI[]>({ url: url });
+  }
+
+  createSensorRecord(sensor: RecordSensorI): Observable<RecordSensorI> {
+    const url = `${environment.baseUrl}api/record/sensor/create`;
+    return this.sharedService.post<RecordSensorI>({ url: url, model: sensor });
   }
 }

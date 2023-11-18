@@ -1,6 +1,6 @@
 export interface RecordSensorI {
   sensor: string,
-  timestamp: string,
+  timestamp?: string,
   temperature?: number
   humidity?: number
   pressure?: number

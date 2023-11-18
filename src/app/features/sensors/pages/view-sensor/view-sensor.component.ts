@@ -22,14 +22,7 @@ export class ViewSensorComponent implements OnInit {
   public sensor: SensorI = {} as SensorI;
   public sensorData: RecordSensorI[] = [];
 
-  public labels: string[] = [];
-  public data: number[] = [];
   public label: string = '';
-  public data2: number[] = [];
-  public label2: string = '';
-
-  public promedioTemp: number = 0;
-  public desviacionLabel: number = 0;
 
   public dataChartOne: ChartDataI = {
     labels: [],
@@ -46,6 +39,8 @@ export class ViewSensorComponent implements OnInit {
     desviacion: 0,
   };
 
+  public setIntervalGenerateData: any;
+
   constructor(
     private sensorsService: SensorsService,
     private route: ActivatedRoute,
@@ -55,28 +50,32 @@ export class ViewSensorComponent implements OnInit {
     this.getParams();
   }
 
+  ngOnDestroy(): void {
+    clearInterval(this.setIntervalGenerateData);
+  }
+
    public getParams() {
     this.route.params.subscribe(async (params: any) => {
       if (!params.id) {
         return;
       }
-      await this.getSensor({ sensorId: params.id});
-      await this.getDataSensor({ sensorId: params.id});
-
-      this.buildChart();
-
-
+      this.getData({ sensorId: params.id});
     });
   }
 
-  public async getSensor({ sensorId }: { sensorId: number }) {
+  public async getData({ sensorId }: { sensorId: string }) {
     try {
-      const respon = await lastValueFrom(this.sensorsService.getSensor(sensorId));
-      console.log(respon);
-      if(!respon) {
-        return;
-      }
-      this.sensor = respon;
+      const promises = [
+        this.getSensor({ sensorId }),
+        this.getDataSensor({ sensorId }),
+      ]
+      const [ sensor, data ]: any = await Promise.all(promises);
+
+      this.buildChart();
+
+      this.setIntervalGenerateData = setTimeout(() => {
+        this.generateData(sensor.type);
+      }, 15000);
 
 
     } catch (error: any) {
@@ -84,10 +83,24 @@ export class ViewSensorComponent implements OnInit {
     }
   }
 
-  public async getDataSensor({ sensorId }: { sensorId: number }) {
+  public async getSensor({ sensorId }: { sensorId: string }) {
+    try {
+      const respon = await lastValueFrom(this.sensorsService.getSensor(sensorId));
+      if(!respon) {
+        return;
+      }
+      this.sensor = respon;
+      return respon;
+
+    } catch (error: any) {
+      console.error(error.message);
+      return false;
+    }
+  }
+
+  public async getDataSensor({ sensorId }: { sensorId: string }) {
     try {
       const respon = await lastValueFrom(this.sensorsService.getSensorData(sensorId));
-      console.log(respon);
       if(!respon) {
         return;
       }
@@ -104,6 +117,7 @@ export class ViewSensorComponent implements OnInit {
     if(type === 'Clima') {
       this.dataChartOne = this.caculateDate('temperature', 'Temperatura');
       this.dataChartTwo = this.caculateDate('humidity', 'Humedad');
+
       return;
     }
 
@@ -125,7 +139,7 @@ export class ViewSensorComponent implements OnInit {
     const promedio =  data.reduce((a, b) => a + b, 0) / this.sensorData.length;
       return {
         labels: this.sensorData.map((item: RecordSensorI) =>{
-          const date = new Date(item.timestamp);
+          const date = new Date(item.timestamp as string);
           return `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
         }),
         label: title,
@@ -140,50 +154,43 @@ export class ViewSensorComponent implements OnInit {
     return Math.sqrt(sum / data.length);
   }
 
-  public buildChartWeather(labelOne: string,labelTwo: string, titleOne: string, titleTwo: string) {
-    this.labels = this.sensorData.map((item: RecordSensorI) =>{
-      const date = new Date(item.timestamp);
-      return `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
-    });
+  public async generateData(type: string) {
+    let recordSensor: RecordSensorI = {
+      sensor: this.sensor._id,
+    };
+    if(type === 'Clima') {
+      recordSensor.temperature = this.getRandomNumber(24, 35);
+      recordSensor.humidity = this.getRandomNumber(55, 66);
+    } else
+    if(type === 'Meteorológico') {
+      recordSensor.wind_speed = this.getRandomNumber(5, 20);
+      recordSensor.pressure = this.getRandomNumber(1000, 1200);
+    } else
+    if(type === 'Ambiental') {
+      const noise_level = this.getRandomNumber(40, 46);
+      recordSensor.noise_level = noise_level;
+      recordSensor.air_quality = noise_level > 43 ? 'Buena' : 'Mala';
+    }
 
-    this.label = titleOne;
-    this.data = this.sensorData.map((item: any) => item[labelOne] as number);
+    try {
+     const response = await lastValueFrom(this.sensorsService.createSensorRecord(recordSensor));
+      if(!response) {
+        return;
+      }
 
-    this.promedioTemp = this.data.reduce((a, b) => a + b, 0) / this.sensorData.length;
+      console.log(response);
 
-    // calcular la desviacion estandar
-    const promedio = this.promedioTemp;
-    const sum = this.data.reduce((a, b) => a + Math.pow(b - promedio, 2), 0);
-    this.desviacionLabel = Math.sqrt(sum / this.data.length);
+      await this.getDataSensor({ sensorId: this.sensor._id });
+      this.buildChart();
 
-    this.label2 = titleTwo;
-    this.data2 = this.sensorData.map((item: any) => item[labelTwo] as number);
+    } catch (error: any) {
+      console.error(error.message);
+    }
 
-    // calcular la Tendencia de la variable seleccionada
+  }
 
-
-
-
-
-
-
-
-
-
-
-
-    // let count = 0;
-    // setInterval(() => {
-    //   if(count > 10) {
-    //     return;
-    //   }
-    //   this.labels.shift();
-    //   this.labels = [ ...this.labels, `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`];
-
-    //   this.data.shift();
-    //   this.data = [ ...this.data, Math.floor(Math.random() * 50) + 1];
-    //   count++;
-    // }, 2000)
+  public getRandomNumber(min: number, max: number): number {
+    return Math.floor(Math.random() * (max - min) + min);
   }
 
 }
