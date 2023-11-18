@@ -1,15 +1,14 @@
 <h2>Bienvenidos</h2>
-
 <div class="container-search">
   <nb-icon icon="search-outline"></nb-icon>
   <input type="text" placeholder="Search sensor" [formControl]="search" />
 </div>
 <section class="container" *ngIf="!loading">
-  <!-- <div *ngFor="let sensor of sensors">
+  <div *ngFor="let sensor of sensors">
     <app-card-sensor [sensor]="sensor" (selected)="onSelectedSensor($event)"></app-card-sensor>
-  </div> -->
+  </div>
 
-  <div *ngIf="sensors.length">
+  <div *ngIf="!sensors.length">
     <p>No hay sensores</p>
   </div>
 
