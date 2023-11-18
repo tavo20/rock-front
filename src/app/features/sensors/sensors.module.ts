@@ -7,6 +7,7 @@ import { CardSensorComponent } from './components/card-sensor/card-sensor.compon
 import { ReactiveFormsModule } from '@angular/forms';
 import { ViewSensorComponent } from './pages/view-sensor/view-sensor.component';
 import { ChartSensorComponent } from './components/chart-sensor/chart-sensor.component';
+import { SharedModule } from 'src/app/shared/shares.module';
 
 
 
@@ -21,7 +22,9 @@ import { ChartSensorComponent } from './components/chart-sensor/chart-sensor.com
     CommonModule,
     SensorsRoutingModule,
     NebularModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
+
   ]
 })
 export class SensorsModule { }

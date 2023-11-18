@@ -16,7 +16,6 @@ import { AddTokenInterceptor } from './shared/interceptor/add-token.interceptor'
 import { PageNotFoundComponentComponent } from './features/page-not-found-component/page-not-found-component.component';
 
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,7 +32,8 @@ import { PageNotFoundComponentComponent } from './features/page-not-found-compon
     ReactiveFormsModule,
     FormsModule,
     Ng2SmartTableModule
-
+  ],
+  exports: [
   ],
   providers: [
     AlertsService,
