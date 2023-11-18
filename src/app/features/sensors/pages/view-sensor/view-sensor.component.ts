@@ -140,7 +140,7 @@ export class ViewSensorComponent implements OnInit {
       return {
         labels: this.sensorData.map((item: RecordSensorI) =>{
           const date = new Date(item.timestamp as string);
-          return `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+          return `${date.getDay()}/${date.getMonth()} ${date.getHours()}:${date.getMinutes()}`;
         }),
         label: title,
         data,

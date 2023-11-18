@@ -45,9 +45,6 @@ export class LoginComponent implements OnInit {
 
   public onLogin(event: Event) {
     event.preventDefault();
-
-    console.log('this.loginForm.value', this.loginForm.value);
-
     if (!this.loginForm.valid) {
       alert('Por favor llena todos los campos')
       return
@@ -59,14 +56,14 @@ export class LoginComponent implements OnInit {
         console.log('response', response);
 
         if(response.success) {
-          this.authService.saveTokenUser(response.token, response);
+          const data = response.data;
+          this.authService.saveTokenUser(data.token, response);
           this.router.navigateByUrl('/sensors/home-sensors');
         } else {
           alert('Ocurrio un error. Intenta mas tarde');
         }
 
       }, error: (error) => {
-        console.error('error', error);
         if(error.status === 400) {
           this.alertsService.info({
             message: error.error,
