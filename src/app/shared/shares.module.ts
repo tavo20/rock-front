@@ -1,13 +1,16 @@
 import { NgModule } from '@angular/core';
 
 import { LoadingComponent } from './components/loading/loading.component';
+import { StatusErrorComponent } from './components/status-error/status-error.component';
 
 @NgModule({
   declarations: [
-    LoadingComponent
+    LoadingComponent,
+    StatusErrorComponent
   ],
   exports: [
-    LoadingComponent
+    LoadingComponent,
+    StatusErrorComponent
   ],
 })
 export class SharedModule { }

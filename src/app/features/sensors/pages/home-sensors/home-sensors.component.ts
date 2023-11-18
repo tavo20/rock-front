@@ -14,6 +14,7 @@ export class HomeSensorsComponent implements OnInit {
   public sensors: SensorI[] = [];
   public sensorsStatic: SensorI[] = [];
   public loading: boolean = true;
+  public statusError: boolean = false;
   public search = new FormControl('');
 
   constructor(
@@ -39,6 +40,7 @@ export class HomeSensorsComponent implements OnInit {
 
     } catch (error: any) {
       console.log(error.message);
+      this.statusError = true;
       return [];
 
     } finally {
