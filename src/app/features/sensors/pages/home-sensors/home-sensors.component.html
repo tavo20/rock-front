@@ -8,12 +8,12 @@
     <div *ngFor="let sensor of sensors">
       <app-card-sensor [sensor]="sensor" (selected)="onSelectedSensor($event)"></app-card-sensor>
     </div>
-
-    <div *ngIf="!sensors.length">
-      <p>No hay sensores</p>
-    </div>
-
   </section>
+  <div *ngIf="!sensors.length">
+    <app-status-empty
+    message="No encontramos sensores"
+    ></app-status-empty>
+  </div>
 </div>
 
 <div *ngIf="loading">
