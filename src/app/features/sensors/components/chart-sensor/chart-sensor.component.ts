@@ -30,8 +30,8 @@ export class ChartSensorComponent implements OnInit {
     if(this.myChart) {
       this.myChart.data.labels = changes.labels.currentValue;;
       this.myChart.data.datasets.forEach((dataset: any) => {
-          dataset.data.shift();
-          dataset.data.push(changes.data.currentValue[changes.data.currentValue.length - 1]);
+          dataset.data = [];
+          dataset.data = changes.data.currentValue;
       });
       this.myChart.update();
     }

@@ -3,7 +3,7 @@
   <nb-icon icon="search-outline"></nb-icon>
   <input type="text" placeholder="Search sensor" [formControl]="search" />
 </div>
-<div *ngIf="!statusError && !loading; else errorMessage">
+<div *ngIf="!statusError && !loading;">
   <section class="container" *ngIf="!loading">
     <div *ngFor="let sensor of sensors">
       <app-card-sensor [sensor]="sensor" (selected)="onSelectedSensor($event)"></app-card-sensor>
@@ -14,15 +14,14 @@
     </div>
 
   </section>
-
 </div>
 
 <div *ngIf="loading">
   <app-loading></app-loading>
 </div>
 
-<ng-template #errorMessage>
+<div  *ngIf="statusError">
   <app-status-error
   message="Intenta de nuevo"
   ></app-status-error>
-</ng-template>
+</div>

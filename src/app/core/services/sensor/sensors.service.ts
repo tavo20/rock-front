@@ -25,9 +25,9 @@ export class SensorsService {
     return this.sharedService.get<SensorI>({ url: url });
   }
 
-  getSensorData(sensorId: string): Observable<RecordSensorI[]> {
+  getSensorData(sensorId: string, filterNumberData: number = 20): Observable<RecordSensorI[]> {
     const url = `${environment.baseUrl}api/record/sensor/data/${sensorId}`;
-    return this.sharedService.get<RecordSensorI[]>({ url: url });
+    return this.sharedService.get<RecordSensorI[]>({ url: url, queryParams: { limit: filterNumberData } });
   }
 
   createSensorRecord(sensor: RecordSensorI): Observable<RecordSensorI> {

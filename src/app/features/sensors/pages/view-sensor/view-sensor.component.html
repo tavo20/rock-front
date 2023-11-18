@@ -1,6 +1,20 @@
 <h1>{{ sensor.sensor_name }}</h1>
 
-<h3>{{ dataChartOne.label }}</h3>
+<nb-layout>
+  <nb-layout-column>
+    <h3 class="title-filter">Filter</h3>
+    <nb-select [(selected)]="selectedItem" (selectedChange)="onSelectedDatafilter($event)">
+      <nb-option value=5>5</nb-option>
+      <nb-option value=10>10</nb-option>
+      <nb-option value=20>20</nb-option>
+      <nb-option value=30>30</nb-option>
+      <nb-option value=40>40</nb-option>
+      <nb-option value=50>50</nb-option>
+      <nb-option value=50>60</nb-option>
+      <nb-option value=50>70</nb-option>
+    </nb-select>
+
+    <h3>{{ dataChartOne.label }}</h3>
 <section class="container-stad">
   <nb-card>
     <nb-card-header> Promedio</nb-card-header>
@@ -62,3 +76,9 @@
   </app-chart-sensor>
 
 </div>
+  </nb-layout-column>
+
+</nb-layout>
+
+
+

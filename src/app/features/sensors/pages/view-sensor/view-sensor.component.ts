@@ -23,6 +23,7 @@ export class ViewSensorComponent implements OnInit {
   public sensorData: RecordSensorI[] = [];
 
   public label: string = '';
+  public selectedItem: string = '20';
 
   public dataChartOne: ChartDataI = {
     labels: [],
@@ -73,9 +74,9 @@ export class ViewSensorComponent implements OnInit {
 
       this.buildChart();
 
-      this.setIntervalGenerateData = setTimeout(() => {
+      this.setIntervalGenerateData = setInterval(() => {
         this.generateData(sensor.type);
-      }, 15000);
+      }, 20000);
 
 
     } catch (error: any) {
@@ -98,16 +99,18 @@ export class ViewSensorComponent implements OnInit {
     }
   }
 
-  public async getDataSensor({ sensorId }: { sensorId: string }) {
+  public async getDataSensor({ sensorId, numberFilter = 20 }: { sensorId: string, numberFilter?:number }) {
     try {
-      const respon = await lastValueFrom(this.sensorsService.getSensorData(sensorId));
+      const respon = await lastValueFrom(this.sensorsService.getSensorData(sensorId, numberFilter));
       if(!respon) {
         return;
       }
       this.sensorData = respon;
+      return respon;
 
     } catch (error: any) {
       console.error(error.message);
+      return false;
     }
   }
 
@@ -178,9 +181,7 @@ export class ViewSensorComponent implements OnInit {
         return;
       }
 
-      console.log(response);
-
-      await this.getDataSensor({ sensorId: this.sensor._id });
+      await this.getDataSensor({ sensorId: this.sensor._id, numberFilter: Number(this.selectedItem) });
       this.buildChart();
 
     } catch (error: any) {
@@ -191,6 +192,14 @@ export class ViewSensorComponent implements OnInit {
 
   public getRandomNumber(min: number, max: number): number {
     return Math.floor(Math.random() * (max - min) + min);
+  }
+
+  public async onSelectedDatafilter(event: number) {
+    const numberFilter = Number(event);
+
+    await this.getDataSensor({ sensorId: this.sensor._id, numberFilter });
+    this.buildChart();
+
   }
 
 }
