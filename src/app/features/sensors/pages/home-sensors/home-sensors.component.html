@@ -5,9 +5,14 @@
   <input type="text" placeholder="Search sensor" [formControl]="search" />
 </div>
 <section class="container" *ngIf="!loading">
-  <div *ngFor="let sensor of sensors">
+  <!-- <div *ngFor="let sensor of sensors">
     <app-card-sensor [sensor]="sensor" (selected)="onSelectedSensor($event)"></app-card-sensor>
+  </div> -->
+
+  <div *ngIf="sensors.length">
+    <p>No hay sensores</p>
   </div>
+
 </section>
 
 <div *ngIf="loading">Loading...</div>

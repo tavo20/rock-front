@@ -13,6 +13,7 @@ import { LayoutComponent } from './layout/layout.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { CurrencyPipe} from '@angular/common';
 import { AddTokenInterceptor } from './shared/interceptor/add-token.interceptor';
+import { PageNotFoundComponentComponent } from './features/page-not-found-component/page-not-found-component.component';
 
 
 
@@ -20,6 +21,7 @@ import { AddTokenInterceptor } from './shared/interceptor/add-token.interceptor'
   declarations: [
     AppComponent,
     LayoutComponent,
+    PageNotFoundComponentComponent,
 
   ],
   imports: [

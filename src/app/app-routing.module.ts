@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { AuthGuard } from './core/guards/auth/auth.guard';
 import { LayoutComponent } from './layout/layout.component';
+import { PageNotFoundComponentComponent } from './features/page-not-found-component/page-not-found-component.component';
 
 const routes: Routes = [
   {
@@ -38,6 +39,7 @@ const routes: Routes = [
       import('../app/features/auth/auth.module').then((m) => m.AuthModule),
   },
   { path: '', redirectTo: 'auth', pathMatch: 'full' },
+  { path: '**', component: PageNotFoundComponentComponent },
 ];
 
 @NgModule({
