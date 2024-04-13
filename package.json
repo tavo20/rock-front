@@ -27,6 +27,7 @@
     "ng2-completer": "^9.0.1",
     "ng2-smart-table": "^1.7.2",
     "rxjs": "~7.5.0",
+    "socket.io-client": "^4.7.2",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
   },
